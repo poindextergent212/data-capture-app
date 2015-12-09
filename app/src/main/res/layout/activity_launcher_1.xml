@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/camera_fragment"
+        android:name="com.esu.halexkimm.datacaptureapp.fragment.CameraFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/camera_fragment" />
+
+    <fragment
+        android:id="@+id/gps_fragment"
+        android:name="com.esu.halexkimm.datacaptureapp.fragment.GPSFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        tools:layout="@layout/gps_fragment" />
+</RelativeLayout>
