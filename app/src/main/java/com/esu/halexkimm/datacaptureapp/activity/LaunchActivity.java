@@ -13,7 +13,7 @@ public class LaunchActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher_1);
+        setContentView(R.layout.activity_launcher);
 
         _activityController = new ActivityController(this);
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-    <SurfaceView
-        android:id="@+id/surfaceViewBack"
+    <TextureView
+        android:id="@+id/textureViewBack"
         android:layout_width="137dp"
         android:layout_height="137dp"
         android:layout_gravity="center"
@@ -11,13 +11,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"/>
 
-    <SurfaceView
-        android:id="@+id/surfaceViewFront"
+    <TextureView
+        android:id="@+id/textureViewFront"
         android:layout_width="120dp"
         android:layout_height="106dp"
         android:layout_gravity="center"
         android:layout_weight="0.26"
-        android:layout_alignBottom="@+id/surfaceViewBack"
+        android:layout_alignBottom="@+id/textureViewBack"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="CAMERA"
         android:id="@+id/cameraButton"
-        android:layout_alignBottom="@+id/surfaceViewBack"
+        android:layout_alignBottom="@+id/textureViewBack"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
