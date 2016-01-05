@@ -150,7 +150,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
      */
     private String mCameraId;
 
-    private AutoFitTextureView mTextureView;
+    //private AutoFitTextureView mTextureView;
 
     /**
      * A {@link CameraCaptureSession } for camera preview.
@@ -404,8 +404,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.cameraButton).setOnClickListener(this);
         //view.findViewById(R.id.info).setOnClickListener(this);
-        mTextureView = (AutoFitTextureView) view.findViewById(R.id.textureViewBack);
-        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+        //mTextureView = (AutoFitTextureView) view.findViewById(R.id.textureViewBack);
+        //mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
 
     }
 
@@ -528,11 +528,11 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
                 // We fit the aspect ratio of TextureView to the size of preview we picked.
                 int orientation = getResources().getConfiguration().orientation;
                 if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mTextureView.setAspectRatio(
-                            mPreviewSize.getWidth(), mPreviewSize.getHeight());
+                   // mTextureView.setAspectRatio(
+                   //         mPreviewSize.getWidth(), mPreviewSize.getHeight());
                 } else {
-                    mTextureView.setAspectRatio(
-                            mPreviewSize.getHeight(), mPreviewSize.getWidth());
+                    //mTextureView.setAspectRatio(
+                    //        mPreviewSize.getHeight(), mPreviewSize.getWidth());
                 }
 
                 mCameraId = cameraId;
@@ -623,7 +623,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
      * Creates a new {@link CameraCaptureSession} for camera preview.
      */
     private void createCameraPreviewSession() {
-        try {
+        /*try {
             SurfaceTexture texture = mTextureView.getSurfaceTexture();
             assert texture != null;
 
@@ -678,7 +678,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
             );
         } catch (CameraAccessException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
@@ -691,9 +691,9 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
      */
     private void configureTransform(int viewWidth, int viewHeight) {
         Activity activity = getActivity();
-        if (null == mTextureView || null == mPreviewSize || null == activity) {
+        /*if (null == mTextureView || null == mPreviewSize || null == activity) {
             return;
-        }
+        }*/
         int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
         Matrix matrix = new Matrix();
         RectF viewRect = new RectF(0, 0, viewWidth, viewHeight);
@@ -711,7 +711,7 @@ public class CameraFragment extends Fragment implements View.OnClickListener {
         } else if (Surface.ROTATION_180 == rotation) {
             matrix.postRotate(180, centerX, centerY);
         }
-        mTextureView.setTransform(matrix);
+       // mTextureView.setTransform(matrix);
     }
 
     /**

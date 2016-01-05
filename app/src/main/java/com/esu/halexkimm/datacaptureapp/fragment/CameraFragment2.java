@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.esu.halexkimm.datacaptureapp.R;
+import com.esu.halexkimm.datacaptureapp.util.DCUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,7 +50,7 @@ import java.util.List;
  * Created by halexkimm on 12/29/15.
  */
 @SuppressLint("NewApi")
-public class CameraFragment2 extends Fragment implements View.OnClickListener {
+public class CameraFragment2 extends Fragment {
 
     //ORIENTATIONS//
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
@@ -194,9 +195,9 @@ public class CameraFragment2 extends Fragment implements View.OnClickListener {
                     }
                     break;
                 }
+
             }
         }
-
         @Override
         public void onCaptureProgressed(CameraCaptureSession session, CaptureRequest request, CaptureResult partialResult) {
             process(partialResult);
@@ -216,6 +217,7 @@ public class CameraFragment2 extends Fragment implements View.OnClickListener {
 
         @Override
         public void onImageAvailable(ImageReader reader) {
+            dcImageFile = new File(getActivity().getExternalFilesDir(null), DCUtils.buildTimeStampString() + ".jpg");
             dcBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), dcImageFile));
         }
 
@@ -228,14 +230,34 @@ public class CameraFragment2 extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        dcImageFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+        //dcImageFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //view.findViewById(R.id.info).setOnClickListener(this);
         View v = inflater.inflate(R.layout.camera_fragment, container, false);
-        v.findViewById(R.id.cameraButton).setOnClickListener(this);
+        v.findViewById(R.id.cameraButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (dcCameraDevice != null) {
+                    closeCamera();
+                } else {
+                    if (dcTextureViewBack.isAvailable()) {
+                        setUpCamera(dcTextureViewBack.getWidth(), dcTextureViewBack.getHeight());
+                        openCamera();
+                        try {
+                            Thread.sleep(10000);
+                            takePicture();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        dcTextureViewBack.setSurfaceTextureListener(dcSurfaceTextureListener);
+                    }
+                }
+            }
+        });
 
         dcTextureViewBack = (TextureView) v.findViewById(R.id.textureViewBack);
         dcTextureViewFront = (TextureView) v.findViewById(R.id.textureViewFront);
@@ -251,7 +273,6 @@ public class CameraFragment2 extends Fragment implements View.OnClickListener {
             openCamera();
         } else {
             dcTextureViewBack.setSurfaceTextureListener(dcSurfaceTextureListener);
-            //dcTextureViewFront.setSurfaceTextureListener(dcSurfaceTextureListener);
         }
     }
 
@@ -260,11 +281,6 @@ public class CameraFragment2 extends Fragment implements View.OnClickListener {
         closeCamera();
         closeBackgroundThread();
         super.onPause();
-    }
-
-    @Override
-    public void onClick(View view) {
-        takePicture();
     }
 
     private static class ImageSaver implements Runnable {

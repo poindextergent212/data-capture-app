@@ -29,7 +29,6 @@ public class ActivityController {
 
         transaction.add(R.id.camera_fragment, _cameraFragment);
         transaction.add(R.id.gps_fragment, _gpsFragment);
-
         transaction.commit();
     }
 }
